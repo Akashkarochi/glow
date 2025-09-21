@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMR Evaluation System | Results</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+        }
+        .score-cell {
+            width: 80px;
+        }
+        .chart-container {
+            height: 250px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-white w-64 border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-2xl font-bold text-blue-600 flex items-center">
+                    <i data-feather="check-square" class="mr-2"></i> OMR Evaluator
+                </h1>
+            </div>
+            <nav class="flex-1 p-4 space-y-2">
+                <a href="index.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i data-feather="home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="upload.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i data-feather="upload"></i>
+                    <span>Upload Sheets</span>
+                </a>
+                <a href="results.html" class="flex items-center space-x-3 p-3 rounded-lg bg-blue-50 text-blue-600">
+                    <i data-feather="file-text"></i>
+                    <span>Results</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i data-feather="settings"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i data-feather="help-circle"></i>
+                    <span>Help</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                        <i data-feather="user" class="text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-medium">Admin User</p>
+                        <p class="text-sm text-gray-500">Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 p-4 flex justify-between items-center">
+                <h2 class="text-xl font-semibold text-gray-800">Evaluation Results</h2>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <i data-feather="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" placeholder="Search student..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <button class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+                        <i data-feather="download" class="w-4 h-4"></i>
+                        <span>Export</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="p-6">
+                <!-- Filters -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Exam Batch</label>
+                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>All Batches</option>
+                                <option>Batch A (Jan 2024)</option>
+                                <option>Batch B (Feb 2024)</option>
+                                <option>Batch C (Mar 2024)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sheet Version</label>
+                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>All Versions</option>
+                                <option>Version A</option>
+                                <option>Version B</option>
+                                <option>Version C</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>All Subjects</option>
+                                <option>Mathematics</option>
+                                <option>Science</option>
+                                <option>English</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Score Range</label>
+                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>All Scores</option>
+                                <option>90-100</option>
+                                <option>80-89</option>
+                                <option>70-79</option>
+                                <option>Below 70</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Summary -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                        <h3 class="text-lg font-semibold mb-4">Overall Statistics</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Total Evaluated</span>
+                                <span class="font-medium">1,248 sheets</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Average Score</span>
+                                <span class="font-medium">78.4/100</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Highest Score</span>
+                                <span class="font-medium">98/100</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Accuracy Rate</span>
+                                <span class="font-medium">99.8%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                        <h3 class="text-lg font-semibold mb-4">Score Distribution</h3>
+                        <div class="chart-container">
+                            <!-- Placeholder for chart - would be replaced with actual chart in implementation -->
+                            <div class="w-full h-full flex items-center justify-center bg-gray-50 rounded-lg">
+                                <p class="text-gray-400">Score distribution chart</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                        <h3 class="text-lg font-semibold mb-4">Subject Performance</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Mathematics</span>
+                                    <span class="text-sm font-medium">16.2/20</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: 81%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Science</span>
+                                    <span class="text-sm font-medium">15.8/20</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 79%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">English</span>
+                                    <span class="text-sm font-medium">14.3/20</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 71.5%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-semibold">Detailed Results</h3>
+                        <div class="flex space-x-2">
+                            <button class="flex items-center space-x-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg transition">
+                                <i data-feather="filter" class="w-4 h-4"></i>
+                                <span>Filter</span>
+                            </button>
+                            <button class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+                                <i data-feather="printer" class="w-4 h-4"></i>
+                                <span>Print</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student ID</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Version</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider score-cell">Math</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider score-cell">Science</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider score-cell">English</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">STD-2048</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">John Smith</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">A</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">18/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">17/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">16/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">87/100</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Evaluated</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i data-feather="download" class="w-4 h-4"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">STD-2049</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Sarah Johnson</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">B</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">19/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">18/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">17/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">92/100</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Evaluated</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i data-feather="download" class="w-4 h-4"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">STD-2050</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Michael Brown</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">C</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">16/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">15/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">14/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">75/100</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Evaluated</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i data-feather="download" class="w-4 h-4"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">STD-2051</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Emily Davis</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">A</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">17/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">16/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">15/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">80/100</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Evaluated</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i data-feather="download" class="w-4 h-4"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">STD-2052</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">David Wilson</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">B</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">14/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">13/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 score-cell">12/20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">65/100</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Review</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3">
+                                            <i data-feather="eye" class="w-4 h-4"></i>
+                                        </button>
+                                        <button class="text-gray-600 hover:text-gray-900">
+                                            <i data-feather="download" class="w-4 h-4"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <div class="text-sm text-gray-500">
+                            Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">1,248</span> results
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                Previous
+                            </button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                                1
+                            </button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                2
+                            </button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                3
+                            </button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        AOS.init();
+        feather.replace();
+    </script>
+</body>
+</html>
