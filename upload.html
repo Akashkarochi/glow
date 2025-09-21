@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMR Evaluation System | Upload Sheets</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+        }
+        .file-upload {
+            height: 300px;
+        }
+        .file-item:hover .file-actions {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-white w-64 border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-2xl font-bold text-blue-600 flex items-center">
+                    <i data-feather="check-square" class="mr-2"></i> OMR Evaluator
+                </h1>
+            </div>
+            <nav class="flex-1 p-4 space-y-2">
+                <a href="index.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i data-feather="home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="upload.html" class="flex items-center space-x-3 p-3 rounded-lg bg-blue-50 text-blue-600">
+                    <i data-feather="upload"></i>
+                    <span>Upload Sheets</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i data-feather="file-text"></i>
+                    <span>Results</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i data-feather="settings"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 text-gray-600">
+                    <i data-feather="help-circle"></i>
+                    <span>Help</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                        <i data-feather="user" class="text-blue-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-medium">Admin User</p>
+                        <p class="text-sm text-gray-500">Administrator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <!-- Header -->
+            <header class="bg-white border-b border-gray-200 p-4 flex justify-between items-center">
+                <h2 class="text-xl font-semibold text-gray-800">Upload OMR Sheets</h2>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <i data-feather="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <button class="p-2 rounded-full hover:bg-gray-100">
+                        <i data-feather="bell"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Upload Section -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 mb-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-lg font-semibold">Upload New Sheets</h3>
+                                <div class="flex space-x-2">
+                                    <button class="flex items-center space-x-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg transition">
+                                        <i data-feather="camera" class="w-4 h-4"></i>
+                                        <span>Capture</span>
+                                    </button>
+                                    <button class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+                                        <i data-feather="upload" class="w-4 h-4"></i>
+                                        <span>Upload</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="file-upload border-2 border-dashed border-gray-300 rounded-xl p-8 text-center flex flex-col items-center justify-center">
+                                <div class="mx-auto w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4">
+                                    <i data-feather="upload" class="text-blue-600 w-6 h-6"></i>
+                                </div>
+                                <h4 class="font-medium text-gray-700 mb-1">Drag and drop files here</h4>
+                                <p class="text-gray-500 text-sm mb-4">or click to browse (JPG, PNG, PDF)</p>
+                                <input type="file" id="fileInput" class="hidden" multiple accept="image/*,.pdf">
+                                <button onclick="document.getElementById('fileInput').click()" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                    Select Files
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Processing Options -->
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                            <h3 class="text-lg font-semibold mb-4">Processing Options</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Answer Key Version</label>
+                                    <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <option>Version A (Math, Science, English)</option>
+                                        <option>Version B (Math, Science, English)</option>
+                                        <option>Version C (Math, Science, English)</option>
+                                        <option>Auto-detect Version</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Processing Mode</label>
+                                    <div class="flex space-x-4">
+                                        <label class="inline-flex items-center">
+                                            <input type="radio" class="form-radio text-blue-600" name="processingMode" checked>
+                                            <span class="ml-2">Standard (Fast)</span>
+                                        </label>
+                                        <label class="inline-flex items-center">
+                                            <input type="radio" class="form-radio text-blue-600" name="processingMode">
+                                            <span class="ml-2">High Accuracy</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-blue-600 rounded" checked>
+                                        <span class="ml-2 text-sm text-gray-700">Save processed images for audit</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="form-checkbox text-blue-600 rounded" checked>
+                                        <span class="ml-2 text-sm text-gray-700">Generate score reports automatically</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upload Queue -->
+                    <div>
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 sticky top-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-lg font-semibold">Upload Queue</h3>
+                                <span class="text-sm text-gray-500">3 files</span>
+                            </div>
+                            <div class="space-y-4">
+                                <!-- File Item -->
+                                <div class="file-item group relative p-3 border border-gray-200 rounded-lg hover:border-blue-200 hover:bg-blue-50 transition">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="p-2 bg-blue-100 rounded-lg text-blue-600">
+                                            <i data-feather="file-text"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900 truncate">OMR_Sheet_001.jpg</p>
+                                            <p class="text-xs text-gray-500">2.4 MB • Uploading...</p>
+                                            <div class="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                                                <div class="bg-blue-600 h-1.5 rounded-full" style="width: 45%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-actions absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition">
+                                        <button class="p-1 text-gray-400 hover:text-gray-600">
+                                            <i data-feather="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- File Item -->
+                                <div class="file-item group relative p-3 border border-gray-200 rounded-lg hover:border-blue-200 hover:bg-blue-50 transition">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="p-2 bg-green-100 rounded-lg text-green-600">
+                                            <i data-feather="file-text"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900 truncate">OMR_Sheet_002.jpg</p>
+                                            <p class="text-xs text-gray-500">1.8 MB • Ready</p>
+                                            <div class="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                                                <div class="bg-green-600 h-1.5 rounded-full" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-actions absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition">
+                                        <button class="p-1 text-gray-400 hover:text-gray-600">
+                                            <i data-feather="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- File Item -->
+                                <div class="file-item group relative p-3 border border-gray-200 rounded-lg hover:border-blue-200 hover:bg-blue-50 transition">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="p-2 bg-yellow-100 rounded-lg text-yellow-600">
+                                            <i data-feather="file-text"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900 truncate">OMR_Sheet_003.pdf</p>
+                                            <p class="text-xs text-gray-500">3.2 MB • Processing</p>
+                                            <div class="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                                                <div class="bg-yellow-500 h-1.5 rounded-full" style="width: 65%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="file-actions absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition">
+                                        <button class="p-1 text-gray-400 hover:text-gray-600">
+                                            <i data-feather="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 pt-4 border-t border-gray-200">
+                                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition flex items-center justify-center space-x-2">
+                                    <i data-feather="play" class="w-4 h-4"></i>
+                                    <span>Process All</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        AOS.init();
+        feather.replace();
+        
+        // File upload interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadBox = document.querySelector('.file-upload');
+            const fileInput = document.getElementById('fileInput');
+            
+            uploadBox.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('border-blue-500', 'bg-blue-50');
+            });
+            
+            uploadBox.addEventListener('dragleave', function() {
+                this.classList.remove('border-blue-500', 'bg-blue-50');
+            });
+            
+            uploadBox.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('border-blue-500', 'bg-blue-50');
+                handleFiles(e.dataTransfer.files);
+            });
+            
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    handleFiles(this.files);
+                }
+            });
+            
+            function handleFiles(files) {
+                console.log('Files to upload:', files);
+                // Here you would handle the file upload process
+                // For demo purposes, we'll just log the files
+            }
+        });
+    </script>
+</body>
+</html>
